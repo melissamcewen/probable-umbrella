@@ -69,7 +69,7 @@ comment: "We noticed you may be asking about greying hair. Unfortunately, this i
 ---
 type: any
 moderators_exempt: true
-body+title (includes): ["dandruff", "flake", "flaking", "seborrheic", "dermatitis", "seborrheic dermatitis", "sebderm", "scalp infection", "fungal scalp", "ketoconazole", "itching", "psoriasis", "candida", "eczema", "scalp pain", "lesions", "bumps", "flakiness", "prescription", "itchiness"]
+body+title (includes): ["dandruff", "flake", "flaking", "seborrheic", "dermatitis", "seborrheic dermatitis", "sebderm", "scalp infection", "fungal scalp", "ketoconazole", "itching", "psoriasis", "candida", "eczema", "scalp pain", "lesions", "bumps", "flakiness", "prescription", "itchiness", "hurting", "pain"]
 action: filter
 action_reason: "Dandruff and scalp infections are medical issues. Please consult a doctor."
 message: "Hello, we noticed you are posting about potential medical issues. We hold these posts for manual review. If it does not break any rules we will approve it."
