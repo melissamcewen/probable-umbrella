@@ -12,58 +12,60 @@ set_spoiler: true
 action: filter
 message: "Hi, your photo submission is under review. If it complies with our rules it will be approved. Please review our rules especially 2, 8, and 10"
 ---
-# Removed due to low activity or new account.
-type: submission
-author:
-    account_age: "< 14 days"
-    comment_karma: "< 10"
-    post_karma: "< 10"
-action: remove
-action_reason: "Removed due to low activity or new account."
+#spam killer
+    type: submission
+    author:
+        is_contributor: false
+        account_age: "< 15"
+    action: filter
+    action_reason: account age
+    message: |
+        Your submission has been temporarily removed due to your account age.
+        
+        The moderators have been notified and should be approving your post shortly or contacting you if there is an issue. There is no need to delete or resubmit your post, this happens to all posts from new accounts because we find the majority of spam comes from new accounts. Once we approve your post, no one will be able to tell it was removed.
 
 ---
 # Auto-remove via reports
-type: submission
+type: any
 reports: 3
-action: remove
-action_reason: "Automatically removed after 3 reports."
+action: filter
+action_reason: "Reported 3 times"
+modmail: The above {{kind}} by /u/{{author}} has received 3 reports. Please investigate.
 
 ---
-# Supplements
-type: submission
-moderators_exempt: true
-body+title (includes): ["supplements", "vitamins", "collagen", "biotin"]
-comment: "We noticed you may be asking a question about taking supplements. Currently there is no evidence that supports any positive hair effects from taking supplements when you do not have nutrient deficiencies. (Source:https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5315033/)  If you believe that you may have a nutrient deficiency please consult with a medical professional."
+
+# Low karma user
+    author:
+        comment_karma: "< 0"
+    action: filter
+    action_reason: "Low karma user"
 
 ---
 # Advice
 type: submission
 moderators_exempt: true
-title (includes): ["advise", "advice", "thoughts", "routine", "journey", "help", "recommend", "bad", "ok", "okay", "treatment", "opinion", "keratin", "k18", "friz", "wrong", "problem", "my hair", "normal", "frustrated", "lighten my", "trim my", "should I", "olaplex", "is this", "struggling", "tangled", "how do I", "why do I", "feeling", "looks", "should I", "stop my hair", "from looking", "crazy"]
-action: filter
-comment: "Your post has been filtered as it may be a request for advice. If it is not, our moderators will approve it. Please post requests for personal advice in the weekly haircare megathread. Simply go back to the mainpage and filter by 'hot' and it should be the top stickied post."
+title (includes): ["advise", "advice", "thoughts", "routine", "journey", "help", "recommend", "bad", "ok", "okay", "treatment", "opinion", "wrong", "problem", "my hair", "normal", "frustrated", "lighten my", "trim my", "should I", "is this", "struggling", "tangled", "how do I", "why do I", "feeling", "looks", "should I", "stop my hair", "from looking", "crazy", "perm", "straighten"]
+author:
+  ~flair_text (regex): ".+"
+action: remove
+comment: "Your post has been removed as it may be a request for advice. If it is not, please DM the moderators. Please post requests for personal advice in the weekly haircare megathread. Simply go back to the mainpage and filter by 'hot' and it should be the top stickied post."
 
 ---
 # Products
 type: submission
 moderators_exempt: true
 title (includes): ["need products", "find", "buy", "purchase", "review", "recommend", "recommendation", "looking for", "any good", "suggestions", "bought"]
-action: filter
-comment: "Your post has been filtered as it may be a request for product reviews/advice, which is outside the scope of our subreddit. If it is not, our moderators will approve it."
-
----
-# Protein Overload
-type: submission
-moderators_exempt: true
-body+title (includes): ["overload"]
-comment: "We noticed you may be asking a question about protein overload. Currently there is no scientific evidence that supports the concept of protein overload."
+action: remove
+message: "Your post has been removed as it may be a request for product reviews/advice, which is outside the scope of our subreddit. If it is not, please DM the moderators."
 
 ---
 # Hair loss
 type: submission
 moderators_exempt: true
 body+title (includes): ["bald", "balding", "hair thinning", "thinning hair", "hairfall", "hair fall", "hair loss", "minoxidil", "recede", "receding", "finasteride"]
-comment: "We noticed you may be asking about hair loss or thinning. Posts about hair loss are not allowed. Please see a doctor as this is a medical concern, not a haircare concern."
+author:
+  ~flair_text (regex): ".+"
+message: "We noticed you may be asking about hair loss or thinning. Posts about hair loss are not allowed. Please see a doctor as this is a medical concern, not a haircare concern."
 action: remove
 action_reason: "bald/thinning"
 ---
@@ -74,25 +76,21 @@ body+title: ["jojoba", "rosemary", "ginseng", "castor", "essential", "argan", "t
 body+title#2: ["growth", "thick"]
 ~body+title#3: ["springer.com", "sciencedirect.com", "jstor.org", "nature.com", "wiley.com", "tandfonline.com", "researchgate.net", "arxiv.org", "pubmed.ncbi.nlm.nih.gov", "thebeautybrains.com", "labmuffin.com", "science-yhairblog"]
 action: filter
+author:
+  ~flair_text (regex): ".+"
 action_reason: "Hair growth oils"
 message: "Hi your {{kind}} has been filtered due to discussion of the use of hair oils to promote hair growth. As most of the claims about these oils for hair growth is pseudoscientific, we filter such posts. If your {{kind}} does not violate our rules, it will be approved."
-
----
-# Graying/Greying
-type: submission
-moderators_exempt: true
-body+title (includes): ["reverse grey ", "reverse gray", "reversing grey", "reversing gray", "going grey", "going gray", "grey hair", "gray hair", "greying", "graying", "greys", "grays", "grey hair reversal", "gray hair reversal", " gray ", " grey "]
-action: filter
-comment: "We noticed you may be asking about greying hair. Unfortunately, this is usually related to genetics. If you think it may be a bigger issue, see a doctor."
 
 ---
 # Medical
 type: any
 moderators_exempt: true
 body+title (includes): ["dandruff", "flake", "flaking", "seborrheic", "dermatitis", "seborrheic dermatitis", "sebderm", "scalp infection", "fungal scalp", "ketoconazole", "itching", "psoriasis", "candida", "eczema", "scalp pain", "lesions", "bumps", "flakiness", "prescription", "itchiness", "alopecia", "accutane", "odor", "infection", "medicated"]
-action: filter
+action: remove
+author:
+  ~flair_text (regex): ".+"
 action_reason: "Dandruff and scalp infections are medical issues. Please consult a doctor."
-message: "Hello, we noticed you are posting about potential medical issues. We hold these posts for manual review. If it does not break any rules we will approve it."
+message: "Hello, we noticed you are posting about potential medical issues. We do not allow these posts in our community. Please see a doctor or try a medical-related community like /r/sebderm, /r/eczema, /r/femalehairloss, and /r/tressless. If you believe this message is in error, please contact the moderators"
 
 ---
 # Chemophobia
@@ -100,6 +98,8 @@ type: any
 moderators_exempt: true
 body+title (includes): ["sulfate-free", "sulfate free", "harmful ingredient", "cocamidopropyl", "formaldehyde", "parabens", "SLS", "SLES"]
 action: filter
+author:
+  ~flair_text (regex): ".+"
 action_reason: "Ingredient concerns flagged. Please note this subreddit discourages chemophobia without evidence."
 
 ---
